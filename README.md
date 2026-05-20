@@ -1,6 +1,7 @@
 # To-do_app
 Continuing with my development progress, this project will help with understanding how to create
-a to-do app that will automatically set it to the current day of the week. This project will also help me learn
+a to-do app that will automatically set it to the current day of the week and keep the tasks added
+within local storage, meaning if the page was refreshed, the tasks will stay for the user. This project will also help me learn
 the drag and drop API for setting a task from created, in progress, to completed.
 
 Massive thanks to freeCodeCamp's web dev project video and https://github.com/burakorkmez to help learn more concepts.
