@@ -20,7 +20,12 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--dark-bg);
+    background-color: var(--light-bg);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .bg-modes {
@@ -42,38 +47,74 @@ body {
     height: 50px;
 }
 
-.weekdays div{
-    width: 100dvw;
-    height: 15dvh;
-    display: flex;
-    flex-direction: row;
-    align-items: start;
-    margin: 0.75rem;
-    color: var(--dark-mode-text);
-    background-color: var(--container-dark);
-}
-
-.weekdays div button {
-    width: 20%;
-    height: 25%;
-    background: none;
-    border: none;
-    color: inherit;
-    font-size: 1rem;
-    cursor: pointer;
-    background-color: none;
-    margin: .25rem;
-
-}
-
-.weekday button img {
-    width: 100%;
-    height: 100%;
-    background: none;
-}
-
-.weekdays div button:hover {
-    background-color: var(--highlighted-dark);
+h1 {
+    text-align: center;
+    margin-bottom: 1.2rem;
     color: var(--light-mode-text);
-    border-radius: 5px;
+    font-size: 2rem;
+}
+
+.container {
+    background-color: var(--container-light);
+    width: 100%;
+    padding: 1.2rem;
+    text-align: center;
+}
+
+.board {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 1.25rem;
+}
+
+.list {
+    background-color: var(--higlighted-light);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    width: 30%;
+    min-height: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.list h2 {
+    color: var(--light-mode-text);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.card {
+    background-color: var(--light-bg);
+    color: var(--light-mode-text);
+    padding: 1rem;
+    margin-bottom: .25rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: grab;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:active {
+    cursor: grabbing;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.list.over {
+    background-color: var(--highlighted-dark);
+}
+
+@media (max-width: 768px) {
+    .board {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .list {
+        width: 85%;
+        margin-bottom: 1.25rem;
+    }
 }
