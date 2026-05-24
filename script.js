@@ -1,22 +1,44 @@
-const weekDays = {
-    0: "sunday",
-    1: "monday",
-    2: "tuesday",
-    3: "wednesday",
-    4: "thursday",
-    5: "friday",
-    6: "saturday"
+const cards = document.querySelectorAll(".card");
+const lists = document.querySelectorAll(".list");
+
+for(const card of cards) {
+    card.addEventListener("dragstart", dragStart)
+    card.addEventListener("dragend", dragEnd)
+}
+
+for(const list of lists) {
+    list.addEventListener("dragover", dragOver)
+    list.addEventListener("dragenter", dragEnter)
+    list.addEventListener("dragleave", dragLeave)
+    list.addEventListener("drop", dragDrop)
+}
+
+function dragStart(e) {
+    //this allows drop location to know which element is being dragged
+    e.dataTransfer.setData("text/plain", this.id)
 };
 
-findCurrentDay();
-
-function findCurrentDay() {
-    const date = new Date();
-    const currentDay = date.getDay();
-    console.log(currentDay);
-    return;
+function dragEnd() {
+    console.log("drag ended")
 };
 
-const currentDaySelected = document.getElementById(`${weekDays[findCurrentDay()]}`);
-//currentDaySelected.classList.toggle("selected");
-console.log(currentDaySelected);
+function dragOver(e) {
+    e.preventDefault();
+};
+
+function dragEnter(e) {
+    e.preventDefault();
+
+    this.classList.add("over");
+};
+
+function dragLeave(e) {
+    this.classList.remove("over");
+};
+
+function dragDrop(e) {
+    const id = e.dataTransfer.getData("text/plain");
+    const card = document.getElementById(id);
+    this.appendChild(card);
+    this.classList.remove("over");
+};
