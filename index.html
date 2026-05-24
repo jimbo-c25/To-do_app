@@ -4,41 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>To do List</title>
+    <title>Drag and Drop To do List</title>
 </head>
 <body>
     <nav class="bg-modes">
         <button class="dark"><img src="icons/dark-mode-switch.svg" height="10" width="10" alt="dark mode"></button>
         <button class="light"><img src="icons/light-switch.svg" height="10" width="10" alt="light mode"></button>
     </nav>
-    <div class="weekdays">
-        <div class="weekday" id="monday">
-            <button><h2>Monday</h2></button>
-            <button class="add-task"><img src="icons/add-icon-darkmode.svg" alt="add task" height="100" width="100"></button>
-        </div>
-        <div class="weekday" id="tuesday">
-            <button><h2>Tuesday</h2></button>
-            <button class="add-task"><img src="icons/add-icon-darkmode.svg" alt="add task" height="100" width="100"></button>
-        </div>
-        <div class="weekday" id="wednesday">
-            <button><h2>Wednesday</h2></button>
-            <button class="add-task"><img src="icons/add-icon-darkmode.svg" alt="add task" height="100" width="100"></button>
-        </div>
-        <div class="weekday" id="thursday">
-            <button><h2>Thursday</h2></button>
-            <button class="add-task"><img src="icons/add-icon-darkmode.svg" alt="add task" height="100" width="100"></button>
-        </div>
-        <div class="weekday" id="friday">
-            <button><h2>Friday</h2></button>
-            <button class="add-task"><img src="icons/add-icon-darkmode.svg" alt="add task" height="100" width="100"></button>
-        </div>
-        <div class="weekday" id="saturday">
-            <button><h2>Saturday</h2></button>
-            <button class="add-task"><img src="icons/add-icon-darkmode.svg" alt="add task" height="100" width="100"></button>
-        </div>
-        <div class="weekday" id="sunday">
-            <button><h2>Sunday</h2></button>
-            <button class="add-task"><img src="icons/add-icon-darkmode.svg" alt="add task" height="100" width="100"></button>
+
+    <div class="container">
+        <h1>Drag & Drop To Do List</h1>
+            <!-- BOARD 1-->
+        <div class="board">
+            <div class="list" id="list1">
+                <h2>Add Task</h2>
+                <div class="card" draggable="true" id="card1">Do laundry</div>
+                <div class="card" draggable="true" id="card2">Go to the gym</div>
+            </div>
+            <!-- BOARD 2-->
+            <div class="list" id="list2">
+                <h2>Working on...</h2>
+                <div class="card" draggable="true" id="card3">Learn to code</div>
+            </div>
+            <!-- BOARD 3-->
+             <div class="list" id="list3">
+                <h2>Completed</h2>
+             </div>
+
         </div>
     </div>
 
