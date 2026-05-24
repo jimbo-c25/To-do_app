@@ -14,21 +14,42 @@
 
     <div class="container">
         <h1>Drag & Drop To Do List</h1>
+        <p id="date"></p>
+
             <!-- BOARD 1-->
         <div class="board">
-            <div class="list" id="list1">
+            <div class="list" id="list1" data-filter="added-task">
                 <h2>Add Task</h2>
-                <div class="card" draggable="true" id="card1">Do laundry</div>
-                <div class="card" draggable="true" id="card2">Go to the gym</div>
+                <div class="input">
+                    <input type="text" id="task-input" placeholder="Add new task">
+                <button id="add-task">
+                    <img src="/icons/add-icon-light-mode.svg" alt="add task">
+                </button>
+                    </div>
+                <div class="added-task-list">
+                    <div class="card" draggable="true" id="card1">Do laundry</div>
+                    <div class="card" draggable="true" id="card2">Go to the gym</div>
+
+                    <div class="empty-state hidden">
+                        <img src="/icons/clipboard-light-mode.svg" width="50" height="50" alt="empty state">
+                        <p>No tasks here yet...</p>
+                    </div>
+                </div>
             </div>
+
             <!-- BOARD 2-->
-            <div class="list" id="list2">
+            <div class="list" id="list2" data-filter="active">
                 <h2>Working on...</h2>
                 <div class="card" draggable="true" id="card3">Learn to code</div>
             </div>
+
             <!-- BOARD 3-->
-             <div class="list" id="list3">
+             <div class="list" id="list3" data-filter="completed">
                 <h2>Completed</h2>
+                <footer>
+                    <p id="items-left">0 items left</p>
+                    <button id="clear-completed">Clear completed</button>
+                </footer>
              </div>
 
         </div>
