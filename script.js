@@ -56,6 +56,8 @@ function dragDrop(e) {
 
 // rest of functionality
 let todoList = [];
+let activeList = [];
+let completedList = [];
 let currentFilter = "all";
 
 addTaskBtn.addEventListener("click", () => {
@@ -80,7 +82,8 @@ function addTodo(text) {
         todoList.push(todo);
 
         saveTodos();
-        //renderTodos();
+        renderTodos();
+        taskInput.value = "";
 };
 
 function saveTodos() {
@@ -106,15 +109,15 @@ function checkEmptyState() {
 function filterTodos(filter) {
     switch (filter) {
         case "active" :
-            return todoList.filter(todo => !todo.completed);
+            return activeList.filter(todo => !todo.completed);
         case "completed" :
-            return todoList.filter(todo => todo.completed);
+            return completedList.filter(todo => todo.completed);
         default: 
             return todoList;
     };
 };
 
-function renderTasks() {
+function renderTodos() {
     todoList.innerHTML = "";
 
     const filteredTodos = filterTodos(currentFilter);
@@ -126,9 +129,89 @@ function renderTasks() {
         todoItem.appendChild("added-tasks");
 
         if (todo.completed) todoItem.classList.add("completed");
+
+        const checkboxContainer = document.createElement("div");
+        checkboxContainer.classList.add("checkbox-container");
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.classList.add("todo-checkbox");
+        checkbox.checked = todo.completed;
+        checkbox.addEventListener("change", () => toggleTodoId(todo.id));
+        
+        const checkmark = document.createElement("span");
+        checkmark.classList.add("checkmark");
+
+        checkboxContainer.appendChild(checkbox);
+        checkboxContainer.appendChild(checkmark);
+        
+        const todoText = document.createElement("span");
+        todoText.classList.add("todo-item-text");
+        todoText.textContent = todo.text;
+
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add("delete-btn");
+        deleteButton.innerHTML = "&times;";
+        deleteButton.addEventListener("click", () => deleteTodo(todo.id));
+
+        todoItem.appendChild(checkboxContainer);
+        todoItem.appendChild(todoText);
+        todoItem.appendChild(deleteButton);
     });
 };
 
-function clearCompletedTasks() {};
+function clearCompletedTasks() {
+    todoList = todoList.filter(todo => !todo.completed);
+    saveTodos();
+    renderTodos();
+};
 
-function toggleTodoId(id) {};
+function toggleTodoId(id) {
+    todoList = todoList.map(todo => {
+        if (todo.id === id) {
+            return {...todo, completed: !todo.completed};
+        };
+
+        return todo;
+    });
+    saveTodos();
+    renderTodos();
+};
+
+function deleteTodo(id) {
+    todoList = todoList.filter(todo => todo.id !== id);
+    saveTodos();
+    renderTodos();
+};
+
+function loadTodos() {
+    const storedTodos = localStorage.getItem("todos");
+    if (storedTodos) todosList = JSON.parse(storedTodos);
+    renderTodos();
+};
+
+filters.forEach(filter => {
+    filter.addEventListener("drop", () => {
+        currentFilter = filter.id;
+        renderTodos();
+    });
+});
+
+function setActiveFilter(filterId) {
+    currentFilter = filterId;
+
+    filters.forEach((item) => {
+        if (item.getAttribute("data-filter") === filterId) {
+            item.classList.add("active");
+        } else {
+            item.classList.remove("active");
+        }
+    });
+
+    renderTodos();
+};
+
+window.addEventListener("DOMContentLoaded", () => {
+    loadTodos();
+    updateItemsLeft();
+});
