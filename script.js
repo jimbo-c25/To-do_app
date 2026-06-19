@@ -58,7 +58,6 @@ function dragDrop(e) {
 let todoList = [];
 let activeList = [];
 let completedList = [];
-let currentFilter = "all";
 
 addTaskBtn.addEventListener("click", () => {
     addTodo(taskInput.value);
@@ -93,36 +92,23 @@ function saveTodos() {
 };
 
 function updateItemsLeft() {
-    const imcompleteTodos = todoList.filter(todoList => !todoList.completed);
-    itemsLeft.textContent = `${incompleteTodos.length} item${
-        incompleteTodos.length !== 1 ? "s" : ""
+    if (completedList.length <= 1) {
+        itemsLeft.textContent = `${completedList.length} item${
+        completedList.length !== 1 ? "s" : ""
     } left`;
+    };
 };
 
 function checkEmptyState() {
-    const filteredTodos = filterTodos(currentFilter);
-
-    if (filteredTodos.length === 0) emptyState.classList.toggle("hidden", false);
+    if (completedList.length === 0) emptyState.classList.toggle("hidden", false);
     else emptyState.classList.toggle("hidden", true);
 };
 
-function filterTodos(filter) {
-    switch (filter) {
-        case "active" :
-            return activeList.filter(todo => !todo.completed);
-        case "completed" :
-            return completedList.filter(todo => todo.completed);
-        default: 
-            return todoList;
-    };
-};
 
 function renderTodos() {
     todoList.innerHTML = "";
 
-    const filteredTodos = filterTodos(currentFilter);
-
-    filteredTodos.forEach(todo => {
+    todoList.forEach(todo => {
         const todoItem = document.createElement("div");
         todoItem.classList.add("card");
         todoItem.textContent = todo.text;
