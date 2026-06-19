@@ -31,6 +31,7 @@ function dragStart(e) {
 
 function dragEnd() {
     console.log("drag ended");
+
 };
 
 function dragOver(e) {
@@ -52,13 +53,18 @@ function dragDrop(e) {
     const card = document.getElementById(id);
     this.appendChild(card);
     this.classList.remove("over");
+
+    if (card.id === "list2") {
+        card.appendChild("active-tasks");
+    } else if (card.id === "list3") {
+        card.appendChild("completed-tasks");
+    };
 };
 
 // rest of functionality
 let todoList = [];
 let activeList = [];
 let completedList = [];
-let currentFilter = "all";
 
 addTaskBtn.addEventListener("click", () => {
     addTodo(taskInput.value);
@@ -93,70 +99,27 @@ function saveTodos() {
 };
 
 function updateItemsLeft() {
-    const imcompleteTodos = todoList.filter(todoList => !todoList.completed);
-    itemsLeft.textContent = `${incompleteTodos.length} item${
-        incompleteTodos.length !== 1 ? "s" : ""
-    } left`;
+    if (completedList.length < 1 || completedList.length === 0) {
+        itemsLeft.textContent = `${completedList.length} items`;
+    } else {
+        itemsLeft.textContent = `${completedList.length} item`;
+    }
 };
 
 function checkEmptyState() {
-    const filteredTodos = filterTodos(currentFilter);
-
-    if (filteredTodos.length === 0) emptyState.classList.toggle("hidden", false);
-    else emptyState.classList.toggle("hidden", true);
+    if (completedList.length === 0) emptyState.classList.toggle("hidden");
+    else emptyState.classList.toggle("hidden");
 };
 
-function filterTodos(filter) {
-    switch (filter) {
-        case "active" :
-            return activeList.filter(todo => !todo.completed);
-        case "completed" :
-            return completedList.filter(todo => todo.completed);
-        default: 
-            return todoList;
-    };
-};
 
 function renderTodos() {
     todoList.innerHTML = "";
 
-    const filteredTodos = filterTodos(currentFilter);
-
-    filteredTodos.forEach(todo => {
+    todoList.forEach(todo => {
         const todoItem = document.createElement("div");
         todoItem.classList.add("card");
         todoItem.textContent = todo.text;
         todoItem.appendChild("added-tasks");
-
-        if (todo.completed) todoItem.classList.add("completed");
-
-        const checkboxContainer = document.createElement("div");
-        checkboxContainer.classList.add("checkbox-container");
-
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.classList.add("todo-checkbox");
-        checkbox.checked = todo.completed;
-        checkbox.addEventListener("change", () => toggleTodoId(todo.id));
-        
-        const checkmark = document.createElement("span");
-        checkmark.classList.add("checkmark");
-
-        checkboxContainer.appendChild(checkbox);
-        checkboxContainer.appendChild(checkmark);
-        
-        const todoText = document.createElement("span");
-        todoText.classList.add("todo-item-text");
-        todoText.textContent = todo.text;
-
-        const deleteButton = document.createElement("button");
-        deleteButton.classList.add("delete-btn");
-        deleteButton.innerHTML = "&times;";
-        deleteButton.addEventListener("click", () => deleteTodo(todo.id));
-
-        todoItem.appendChild(checkboxContainer);
-        todoItem.appendChild(todoText);
-        todoItem.appendChild(deleteButton);
     });
 };
 
@@ -190,12 +153,12 @@ function loadTodos() {
     renderTodos();
 };
 
-filters.forEach(filter => {
+/* filters.forEach(filter => {
     filter.addEventListener("drop", () => {
         currentFilter = filter.id;
         renderTodos();
     });
-});
+}); */
 
 function setActiveFilter(filterId) {
     currentFilter = filterId;
